@@ -18,4 +18,25 @@ export async function httpPost<TRequest, TResponse = unknown>(
   return await axiosInstance.post<TRequest, TResponse>(url, data, options);
 }
 
-// TODO: Implementovat další HTTP metody (PUT, DELETE, PATCH)
+export async function httpPatch<TRequest, TResponse = unknown>(
+  url: string,
+  data: TRequest,
+  options: AxiosRequestConfig = {},
+) {
+  return await axiosInstance.patch<TRequest, TResponse>(url, data, options);
+}
+
+export async function httpPut<TRequest, TResponse = unknown>(
+  url: string,
+  data: TRequest,
+  options: AxiosRequestConfig = {},
+) {
+  return await axiosInstance.put<TRequest, TResponse>(url, data, options);
+}
+
+export async function httpDelete<TResponse = unknown>(
+  url: string,
+  options: AxiosRequestConfig = {},
+) {
+  return await axiosInstance.delete<TResponse>(url, options);
+}

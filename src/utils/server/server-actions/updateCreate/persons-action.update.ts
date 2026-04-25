@@ -3,7 +3,7 @@
 import { Person } from "@/types/person.types";
 import { ActionResult } from "../../../../types/person-actions.types";
 import { AxiosResponse } from "axios";
-import { httpPost } from "../../server.http";
+import { httpPost, httpPatch } from "../../server.http";
 import { ApiError } from "@/types/error.types";
 import { updateTag } from "next/cache";
 
