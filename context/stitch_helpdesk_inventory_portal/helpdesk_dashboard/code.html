@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Helpdesk Dashboard</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#6a364b",
+                        "tertiary": "#000000",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#828488",
+                        "on-secondary-container": "#7c455b",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-high": "#e8e8e8",
+                        "on-surface": "#1a1c1c",
+                        "primary": "#000000",
+                        "tertiary-fixed": "#e2e2e7",
+                        "surface-container-low": "#f3f3f4",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#091d2c",
+                        "outline": "#74777c",
+                        "on-surface-variant": "#43474c",
+                        "on-primary-container": "#738699",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary-fixed": "#d1e5fa",
+                        "tertiary-container": "#1a1c1f",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c4c7cc",
+                        "primary-container": "#091d2c",
+                        "surface-container": "#eeeeee",
+                        "surface-dim": "#dadada",
+                        "secondary-fixed-dim": "#f9b3cc",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#45474b",
+                        "error-container": "#ffdad6",
+                        "secondary": "#854d63",
+                        "background": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "inverse-on-surface": "#f0f1f1",
+                        "inverse-primary": "#b6c9dd",
+                        "on-primary-fixed-variant": "#37495a",
+                        "surface-variant": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "secondary-container": "#ffb8d1",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-background": "#1a1c1c",
+                        "surface-tint": "#4e6072",
+                        "primary-fixed-dim": "#b6c9dd",
+                        "on-secondary-fixed": "#360b1f",
+                        "on-tertiary-fixed": "#1a1c1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1.25rem"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "gutter": "16px",
+                        "sm": "12px",
+                        "safe-margin": "20px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "lg": "32px",
+                        "md": "20px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "button": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "h1": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "button": ["16px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["15px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["34px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["17px", { "lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg text-body-lg antialiased min-h-screen pb-[100px] selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-900 dark:text-slate-50 font-['Plus_Jakarta_Sans'] antialiased docked full-width top-0 sticky z-40 no-border shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center w-full px-5 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-sm">
+<!-- Decorative Icon for Brand -->
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">headset_mic</span>
+</div>
+<h1 class="text-xl font-bold text-[#001221] dark:text-slate-100 tracking-tight">Helpdesk</h1>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.97] transition-transform duration-200 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.97] transition-transform duration-200 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-surface-variant transition-colors active:scale-[0.97]">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close up portrait of a young professional woman with warm natural lighting, smiling gently" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaocmZPsCu-Vm8yUa3DEBab2Vbg59L0HQlcO7WVRqoLBmHE8du2lf9-0hOXUT_UhnPW4b-U0yXjqY_MHH_Ln2LhIEu3SIpHbYFhQRF8YzmGWdSizwLlxPy4_rpmEN5WCLHfJZ5tLoXx7ZpqigbLEwEhdo6BDgVV4AZPLfbsKMP4Z6nAbWUvtpI7JJ7LvKFL3FcDNg04fEqiItu2l_DBAmbBTG_Ni96UbE-V6tX8NXW_H3RwnEywwwIN5azzRwsOFYlVYHncsGkewyL"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="max-w-7xl mx-auto px-safe-margin pt-lg flex flex-col gap-xl">
+<!-- Welcome Section -->
+<section class="flex flex-col gap-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider font-semibold">Tuesday, Oct 24</p>
+<h2 class="font-h1 text-h1 text-on-primary-fixed">Good Morning, Sarah</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-xs">Here's what's happening across the campus today.</p>
+</section>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-2 md:grid-cols-3 gap-md">
+<!-- Metric Card 1 (Highlight/Pink) -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-md flex flex-col justify-between shadow-[0px_10px_30px_rgba(0,0,0,0.04)] aspect-square md:aspect-auto md:h-[180px] active:scale-[0.98] transition-transform duration-200 col-span-2 md:col-span-1 border border-surface-variant/30">
+<div class="flex justify-between items-start w-full">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">confirmation_number</span>
+</div>
+<span class="bg-surface-container text-on-surface font-label-caps text-label-caps px-3 py-1 rounded-full">+12 today</span>
+</div>
+<div class="mt-auto pt-md">
+<p class="font-h1 text-h1 text-on-primary-fixed leading-none">148</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium mt-xs">Total Tickets</p>
+</div>
+</div>
+<!-- Metric Card 2 (Blue/Primary) -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-md flex flex-col justify-between shadow-[0px_10px_30px_rgba(0,0,0,0.04)] aspect-square active:scale-[0.98] transition-transform duration-200 border border-surface-variant/30">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">devices</span>
+</div>
+<div class="mt-auto">
+<p class="font-h2 text-h2 text-on-primary-fixed leading-none">2,041</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Active Devices</p>
+</div>
+</div>
+<!-- Metric Card 3 (Neutral) -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-md flex flex-col justify-between shadow-[0px_10px_30px_rgba(0,0,0,0.04)] aspect-square active:scale-[0.98] transition-transform duration-200 border border-surface-variant/30">
+<div class="w-10 h-10 rounded-full bg-surface-container text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">meeting_room</span>
+</div>
+<div class="mt-auto">
+<p class="font-h2 text-h2 text-on-primary-fixed leading-none">14</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Available Rooms</p>
+</div>
+</div>
+</section>
+<!-- Recent Support Requests (In-set List) -->
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-end">
+<h3 class="font-h2 text-h2 text-on-primary-fixed">Recent Support Requests</h3>
+<button class="font-button text-button text-secondary hover:text-on-secondary-fixed-variant transition-colors">View All</button>
+</div>
+<div class="bg-surface-container-lowest rounded-[2rem] shadow-[0px_10px_30px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden border border-surface-variant/30">
+<!-- Request Item 1 -->
+<div class="flex items-center gap-md p-md hover:bg-surface-bright transition-colors cursor-pointer active:bg-surface-container">
+<div class="w-12 h-12 rounded-xl bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">wifi_off</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-button text-button text-on-primary-fixed truncate">Conference Room B Wi-Fi Down</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Reported by David M. • High Priority</p>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">10 MIN AGO</span>
+</div>
+</div>
+<!-- Separator -->
+<div class="h-[1px] bg-surface-variant/50 ml-[76px] mr-md"></div>
+<!-- Request Item 2 -->
+<div class="flex items-center gap-md p-md hover:bg-surface-bright transition-colors cursor-pointer active:bg-surface-container">
+<div class="w-12 h-12 rounded-xl bg-surface-container text-on-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">print</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-button text-button text-on-primary-fixed truncate">Printer Jam on 3rd Floor</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Reported by Anna K. • Low Priority</p>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">45 MIN AGO</span>
+</div>
+</div>
+<!-- Separator -->
+<div class="h-[1px] bg-surface-variant/50 ml-[76px] mr-md"></div>
+<!-- Request Item 3 -->
+<div class="flex items-center gap-md p-md hover:bg-surface-bright transition-colors cursor-pointer active:bg-surface-container">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">computer</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-button text-button text-on-primary-fixed truncate">Laptop Screen Flickering</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Reported by Sam R. • Medium Priority</p>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">2 HRS AGO</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-full px-6 py-3 no-border shadow-[0px_15px_35px_rgba(0,0,0,0.08)] z-50">
+<div class="flex justify-between items-center w-full">
+<!-- Dashboard (Active) -->
+<a class="flex flex-col items-center justify-center bg-[#F2F2F7] dark:bg-slate-800 text-[#001221] dark:text-white rounded-full px-4 py-2 hover:text-slate-900 dark:hover:text-slate-100 active:scale-[0.97] transition-all duration-200 cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans'] uppercase tracking-widest mt-1">Dashboard</span>
+</a>
+<!-- Tickets (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 active:scale-[0.97] transition-all duration-200 cubic-bezier(0.34,1.56,0.64,1) px-4 py-2" href="#">
+<span class="material-symbols-outlined">confirmation_number</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans'] uppercase tracking-widest mt-1">Tickets</span>
+</a>
+<!-- Inventory (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 active:scale-[0.97] transition-all duration-200 cubic-bezier(0.34,1.56,0.64,1) px-4 py-2" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans'] uppercase tracking-widest mt-1">Inventory</span>
+</a>
+<!-- Admin (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 active:scale-[0.97] transition-all duration-200 cubic-bezier(0.34,1.56,0.64,1) px-4 py-2" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans'] uppercase tracking-widest mt-1">Admin</span>
+</a>
+</div>
+</nav>
+</body></html>

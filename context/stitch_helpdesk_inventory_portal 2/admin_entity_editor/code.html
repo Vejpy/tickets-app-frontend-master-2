@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Helpdesk Admin Editor</title>
+<!-- Google Fonts: Plus Jakarta Sans & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Theme injected from Source of Truth) -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#360b1f",
+                    "on-background": "#1a1c1c",
+                    "surface": "#f9f9f9",
+                    "on-secondary-container": "#7c455b",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#000000",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary-fixed-dim": "#c6c6cb",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#4e6072",
+                    "on-tertiary-container": "#828488",
+                    "on-secondary-fixed-variant": "#6a364b",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#d1e5fa",
+                    "inverse-on-surface": "#f0f1f1",
+                    "on-tertiary-fixed-variant": "#45474b",
+                    "tertiary-fixed": "#e2e2e7",
+                    "surface-container-high": "#e8e8e8",
+                    "primary-fixed-dim": "#b6c9dd",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#1a1c1f",
+                    "surface-container-low": "#f3f3f4",
+                    "on-primary-fixed": "#091d2c",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1a1c1c",
+                    "outline": "#74777c",
+                    "primary-container": "#091d2c",
+                    "inverse-primary": "#b6c9dd",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#f9b3cc",
+                    "tertiary-container": "#1a1c1f",
+                    "on-primary-fixed-variant": "#37495a",
+                    "secondary-container": "#ffb8d1",
+                    "on-primary-container": "#738699",
+                    "primary": "#000000",
+                    "outline-variant": "#c4c7cc",
+                    "on-surface-variant": "#43474c",
+                    "inverse-surface": "#2f3131",
+                    "surface-dim": "#dadada",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f9f9f9",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-container": "#eeeeee",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#854d63",
+                    "secondary-fixed": "#ffd9e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "md": "20px",
+                    "base": "8px",
+                    "safe-margin": "20px",
+                    "xs": "4px",
+                    "xl": "48px",
+                    "lg": "32px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-caps": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "h2": ["Plus Jakarta Sans"],
+                    "h1": ["Plus Jakarta Sans"],
+                    "button": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["17px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["15px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "h1": ["34px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "button": ["16px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .shadow-ambient {
+                box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            }
+            .shadow-floating {
+                box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.08);
+            }
+            .squishy:active {
+                transform: scale(0.97);
+            }
+            /* Hide scrollbar for clean horizontal scrolling */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-sm antialiased min-h-screen flex flex-col pb-xl">
+<!-- 
+      Semantic Shell Mandate: 
+      Task-Focused Interface (Editor). 
+      Main TopNavBar and BottomNavBar are SUPPRESSED to focus on the form canvas.
+      A contextual Editor App Bar is provided instead.
+    -->
+<!-- Editor App Bar -->
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur-lg px-safe-margin py-sm flex justify-between items-center w-full">
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-lowest shadow-ambient text-on-surface hover:bg-surface-container transition-colors squishy">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Admin Editor</span>
+<h1 class="font-button text-button text-on-surface">Ticket #8492</h1>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-container text-on-primary-container shadow-ambient hover:opacity-90 transition-opacity squishy">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</header>
+<!-- Entity Switcher (Floating Capsule Style) -->
+<div class="px-safe-margin mt-sm mb-lg z-30">
+<div class="bg-surface-container-lowest shadow-floating rounded-full p-xs flex gap-xs overflow-x-auto no-scrollbar max-w-2xl mx-auto">
+<!-- Active Tab -->
+<button class="flex-shrink-0 flex items-center gap-xs bg-surface-container text-on-surface px-sm py-sm rounded-full squishy transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">confirmation_number</span>
+<span class="font-button text-button">Ticket</span>
+</button>
+<!-- Inactive Tabs -->
+<button class="flex-shrink-0 flex items-center gap-xs px-sm py-sm text-on-surface-variant hover:bg-surface-container/50 rounded-full squishy transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-button text-button">Person</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-xs px-sm py-sm text-on-surface-variant hover:bg-surface-container/50 rounded-full squishy transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">meeting_room</span>
+<span class="font-button text-button">Room</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-xs px-sm py-sm text-on-surface-variant hover:bg-surface-container/50 rounded-full squishy transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">devices</span>
+<span class="font-button text-button">Device</span>
+</button>
+</div>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-safe-margin max-w-3xl mx-auto w-full flex flex-col gap-lg">
+<!-- Section 1: Core Details (Bubbly Card) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-ambient p-md flex flex-col gap-md">
+<h2 class="font-h2 text-h2 text-on-surface">Core Details</h2>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant pl-xs" for="ticket-title">Issue Title</label>
+<input class="w-full bg-surface-container text-on-surface font-body-lg text-body-lg rounded-xl px-md py-sm border-none focus:ring-2 focus:ring-primary-container outline-none transition-all placeholder:text-outline-variant" id="ticket-title" type="text" value="Projector bulb burnt out in Conf Room B"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant pl-xs" for="ticket-desc">Description</label>
+<textarea class="w-full bg-surface-container text-on-surface font-body-lg text-body-lg rounded-xl px-md py-sm border-none focus:ring-2 focus:ring-primary-container outline-none transition-all placeholder:text-outline-variant resize-none" id="ticket-desc" rows="4">The projector in Conference Room B is displaying a warning message and the bulb is completely burnt out. Need a replacement ASAP before the 2 PM client meeting.</textarea>
+</div>
+</section>
+<!-- Section 2: Metadata (Bento Grid Style) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Status Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient p-md flex flex-col gap-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Status</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container text-on-surface font-button text-button rounded-lg px-md py-sm border-none focus:ring-2 focus:ring-primary-container outline-none pr-xl">
+<option>Open</option>
+<option>In Progress</option>
+<option>Waiting on User</option>
+<option>Resolved</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-sm text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Priority Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient p-md flex flex-col gap-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Priority</label>
+<div class="flex gap-sm">
+<button class="flex-1 bg-error-container text-on-error-container font-button text-button rounded-lg py-sm flex items-center justify-center gap-xs squishy">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">error</span>
+                        High
+                    </button>
+<button class="flex-1 bg-surface-container text-on-surface-variant font-button text-button rounded-lg py-sm flex items-center justify-center squishy">
+                        Medium
+                    </button>
+<button class="flex-1 bg-surface-container text-on-surface-variant font-button text-button rounded-lg py-sm flex items-center justify-center squishy">
+                        Low
+                    </button>
+</div>
+</div>
+<!-- Assignee Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient p-md flex flex-col gap-sm md:col-span-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Assignee</label>
+<div class="flex items-center justify-between bg-surface-container rounded-xl p-sm">
+<div class="flex items-center gap-sm pl-xs">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-button text-button">
+                            JD
+                        </div>
+<div class="flex flex-col">
+<span class="font-button text-button text-on-surface">John Doe</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">IT Support Specialist</span>
+</div>
+</div>
+<button class="px-sm py-xs bg-surface-container-lowest shadow-ambient rounded-full text-on-surface font-button text-button squishy">
+                        Reassign
+                    </button>
+</div>
+</div>
+</section>
+<!-- Section 3: In-set List for Tags/Categories -->
+<section class="bg-surface-container-lowest rounded-xl shadow-ambient p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<h2 class="font-h2 text-h2 text-on-surface">Tags &amp; Categories</h2>
+<button class="text-primary-container font-button text-button flex items-center gap-xs squishy">
+<span class="material-symbols-outlined text-[20px]">add</span> Add
+                </button>
+</div>
+<div class="bg-surface-container rounded-xl p-xs flex flex-wrap gap-sm">
+<!-- Chips -->
+<div class="bg-surface-container-lowest shadow-ambient px-sm py-xs rounded-full flex items-center gap-xs">
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Hardware</span>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+<div class="bg-surface-container-lowest shadow-ambient px-sm py-xs rounded-full flex items-center gap-xs">
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Meeting Room</span>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Fixed Action Area -->
+<div class="fixed bottom-0 left-0 right-0 p-safe-margin bg-gradient-to-t from-background via-background/90 to-transparent pt-lg z-40 pointer-events-none">
+<div class="max-w-3xl mx-auto flex justify-end pointer-events-auto">
+<!-- Primary Action Button adhering to tactile ergonomics -->
+<button class="bg-primary text-on-primary font-button text-button rounded-full px-xl py-[16px] shadow-floating flex items-center gap-sm squishy hover:bg-on-surface transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save</span>
+                Save Ticket
+            </button>
+</div>
+</div>
+</body></html>

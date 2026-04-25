@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HelpDesk Tickets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#360b1f",
+                        "on-background": "#1a1c1c",
+                        "surface": "#f9f9f9",
+                        "on-secondary-container": "#7c455b",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#000000",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#4e6072",
+                        "on-tertiary-container": "#828488",
+                        "on-secondary-fixed-variant": "#6a364b",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#d1e5fa",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-tertiary-fixed-variant": "#45474b",
+                        "tertiary-fixed": "#e2e2e7",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-fixed-dim": "#b6c9dd",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#1a1c1f",
+                        "surface-container-low": "#f3f3f4",
+                        "on-primary-fixed": "#091d2c",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1a1c1c",
+                        "outline": "#74777c",
+                        "primary-container": "#091d2c",
+                        "inverse-primary": "#b6c9dd",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#f9b3cc",
+                        "tertiary-container": "#1a1c1f",
+                        "on-primary-fixed-variant": "#37495a",
+                        "secondary-container": "#ffb8d1",
+                        "on-primary-container": "#738699",
+                        "primary": "#000000",
+                        "outline-variant": "#c4c7cc",
+                        "on-surface-variant": "#43474c",
+                        "inverse-surface": "#2f3131",
+                        "surface-dim": "#dadada",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container": "#eeeeee",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#854d63",
+                        "secondary-fixed": "#ffd9e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "md": "20px",
+                        "base": "8px",
+                        "safe-margin": "20px",
+                        "xs": "4px",
+                        "xl": "48px",
+                        "lg": "32px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "h2": ["Plus Jakarta Sans"],
+                        "h1": ["Plus Jakarta Sans"],
+                        "button": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["17px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["15px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "h1": ["34px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "button": ["16px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #ffffff; }
+        .ambient-shadow { box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04); }
+        .squishy:active { transform: scale(0.97); transition: transform 0.2s ease; }
+    </style>
+</head>
+<body class="font-body-lg text-body-lg text-on-background min-h-screen pb-[100px]">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-5 py-4 w-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-md shadow-sm font-plus-jakarta-sans antialiased">
+<div class="text-xl font-black tracking-tight text-slate-900 dark:text-white">HelpDesk</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 text-pink-600 dark:text-pink-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 text-pink-600 dark:text-pink-400">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-safe-margin max-w-4xl mx-auto pt-lg">
+<!-- Header Section -->
+<div class="mb-lg">
+<h1 class="font-h1 text-h1 text-on-surface mb-sm inline-block relative">
+                Tickets
+                <div class="absolute -bottom-2 left-0 w-full h-1.5 bg-pink-500 rounded-full"></div>
+</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-sm">Manage and track all support requests.</p>
+</div>
+<!-- Search and Filter -->
+<div class="flex flex-col sm:flex-row gap-sm mb-lg">
+<div class="relative flex-grow squishy">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-[50px] bg-[#F2F2F7] rounded-xl pl-xl pr-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border-none" placeholder="Search tickets (Press Enter)" type="text"/>
+</div>
+<div class="flex gap-sm overflow-x-auto pb-2 sm:pb-0 hide-scrollbar">
+<button class="whitespace-nowrap px-md h-[50px] rounded-full bg-tertiary-fixed-dim font-button text-button text-primary squishy">All</button>
+<button class="whitespace-nowrap px-md h-[50px] rounded-full bg-[#F2F2F7] font-button text-button text-on-surface-variant squishy hover:bg-surface-variant">Open</button>
+<button class="whitespace-nowrap px-md h-[50px] rounded-full bg-[#F2F2F7] font-button text-button text-on-surface-variant squishy hover:bg-surface-variant">In Progress</button>
+<button class="whitespace-nowrap px-md h-[50px] rounded-full bg-[#F2F2F7] font-button text-button text-on-surface-variant squishy hover:bg-surface-variant">Resolved</button>
+</div>
+</div>
+<!-- Ticket Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Ticket Card 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md ambient-shadow squishy cursor-pointer flex flex-col justify-between min-h-[160px]">
+<div>
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline uppercase">#HD-1042</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-error-container text-on-error-container rounded-md font-label-caps text-label-caps">High</span>
+<span class="px-2 py-1 bg-[#F2F2F7] text-on-surface-variant rounded-md font-label-caps text-label-caps">Open</span>
+</div>
+</div>
+<h2 class="font-h2 text-h2 text-on-surface line-clamp-2 mb-sm">Unable to access VPN from remote office</h2>
+</div>
+<div class="flex items-center gap-sm mt-auto pt-sm border-t border-surface-variant">
+<img alt="Sarah J" class="w-8 h-8 rounded-full object-cover" data-alt="Portrait of a young professional woman smiling slightly against a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjoF4esryhAE4vEZR1xLNSpOMOD-sOUnrcvbn4zwuwtuNC7cW44gFw-fu7mUEw01H5UVaSszR7JGLFVjkBMBOba5h8Wnp36exo5ISiO2ZOgf4EWZMHauXvVaPzlljcMUffXI-_Aw12cEGHdQ1W8NwkD8XIhuOtnOWD6Jn93UeOSCU1t4Av4Rwfo8k9aHNGfl3LW4DuiWOIiztoYK9IB9zlBSFGg0mMMQ0Ggk0zkASeICkC9P7d8ZJrgWhTtKVo9RlDX7_e_4wVF4ky"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sarah Jenkins</span>
+</div>
+</div>
+<!-- Ticket Card 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md ambient-shadow squishy cursor-pointer flex flex-col justify-between min-h-[160px]">
+<div>
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline uppercase">#HD-1041</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant rounded-md font-label-caps text-label-caps">Low</span>
+<span class="px-2 py-1 bg-primary-fixed text-on-primary-fixed rounded-md font-label-caps text-label-caps">In Progress</span>
+</div>
+</div>
+<h2 class="font-h2 text-h2 text-on-surface line-clamp-2 mb-sm">Request for new dual monitor setup</h2>
+</div>
+<div class="flex items-center gap-sm mt-auto pt-sm border-t border-surface-variant">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-button text-button">MR</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Marcus Reed</span>
+</div>
+</div>
+<!-- Ticket Card 3 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md ambient-shadow squishy cursor-pointer flex flex-col justify-between min-h-[160px]">
+<div>
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline uppercase">#HD-1039</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-md font-label-caps text-label-caps">Med</span>
+<span class="px-2 py-1 bg-surface-container text-outline rounded-md font-label-caps text-label-caps">Resolved</span>
+</div>
+</div>
+<h2 class="font-h2 text-h2 text-on-surface line-clamp-2 mb-sm">Email syncing issue on mobile device</h2>
+</div>
+<div class="flex items-center gap-sm mt-auto pt-sm border-t border-surface-variant">
+<img alt="David C" class="w-8 h-8 rounded-full object-cover" data-alt="Portrait of a young man with a slight beard in a casual setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByR0cFlOivAVUJEsZHB9nLY4-7YLm-pnQeWhRu3ixEnVmRt9b2gr08lfcefRpoSuX-TyGV7DiAKfLoOGMZ4hQHK5GqBDskniRTNb7yCzasT2p4CASsEywSfGdGk9T7EEI2I4FJKwB2gh_MY_K5JDbRnHmkiTknOAPqQPzvsjBbcW8ZVUSIqQGKh_2N79sdvZ-oMXveHSnDNwLz8fJK14GrZc3BEjW4envJOeBE2xAVEyDu-yge6BsKdGIO35FizI1X6W8XP5art5cd"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">David Chen</span>
+</div>
+</div>
+<!-- Ticket Card 4 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md ambient-shadow squishy cursor-pointer flex flex-col justify-between min-h-[160px]">
+<div>
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline uppercase">#HD-1038</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-error-container text-on-error-container rounded-md font-label-caps text-label-caps">High</span>
+<span class="px-2 py-1 bg-[#F2F2F7] text-on-surface-variant rounded-md font-label-caps text-label-caps">Open</span>
+</div>
+</div>
+<h2 class="font-h2 text-h2 text-on-surface line-clamp-2 mb-sm">Password reset loop on main application portal</h2>
+</div>
+<div class="flex items-center gap-sm mt-auto pt-sm border-t border-surface-variant">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-button text-button">EW</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Elena Woods</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-4 py-3 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-[0px_15px_35px_rgba(0,0,0,0.1)] floating-capsule rounded-full mx-6 mb-8 md:hidden">
+<button class="flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-pink-600 dark:text-pink-400 rounded-full w-12 h-12 hover:opacity-80 transition-opacity active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">confirmation_number</span>
+<span class="text-[10px] font-bold uppercase tracking-wider font-plus-jakarta-sans sr-only">Tickets</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 w-12 h-12 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:opacity-80 transition-opacity active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-[10px] font-bold uppercase tracking-wider font-plus-jakarta-sans sr-only">Inventory</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 w-12 h-12 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:opacity-80 transition-opacity active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-wider font-plus-jakarta-sans sr-only">Reports</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 w-12 h-12 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:opacity-80 transition-opacity active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider font-plus-jakarta-sans sr-only">Settings</span>
+</button>
+</nav>
+<style>
+        /* Hide scrollbar for filter chips */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>
