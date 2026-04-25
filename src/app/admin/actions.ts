@@ -8,7 +8,7 @@ import { Ticket } from "@/types/ticket.types";
 export async function deletePerson(id: string) {
   try {
     await apiFetch(`/person/${id}`, { method: "DELETE" });
-    revalidateTag("persons");
+    revalidateTag("persons", "hours");
     revalidatePath("/admin/persons");
     revalidatePath("/persons");
   } catch (error) {
@@ -23,7 +23,7 @@ export async function createPerson(data: Omit<Person, "id">) {
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("persons");
+    revalidateTag("persons", "hours");
     revalidatePath("/admin/persons");
     revalidatePath("/persons");
   } catch (error) {
@@ -35,7 +35,7 @@ export async function createPerson(data: Omit<Person, "id">) {
 export async function deleteTicket(id: string) {
   try {
     await apiFetch(`/ticket/${id}`, { method: "DELETE" });
-    revalidateTag("tickets");
+    revalidateTag("tickets", "hours");
     revalidatePath("/admin/tickets");
     revalidatePath("/tickets");
   } catch (error) {
@@ -50,7 +50,7 @@ export async function createTicket(data: any) {
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("tickets");
+    revalidateTag("tickets", "hours");
     revalidatePath("/admin/tickets");
     revalidatePath("/tickets");
   } catch (error) {
@@ -62,7 +62,7 @@ export async function createTicket(data: any) {
 export async function deleteRoom(id: string) {
   try {
     await apiFetch(`/room/${id}`, { method: "DELETE" });
-    revalidateTag("rooms");
+    revalidateTag("rooms", "hours");
     revalidatePath("/admin/rooms");
     revalidatePath("/rooms");
   } catch (error) {
@@ -77,7 +77,7 @@ export async function createRoom(data: { name: string; floor: number }) {
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("rooms");
+    revalidateTag("rooms", "hours");
     revalidatePath("/admin/rooms");
     revalidatePath("/rooms");
   } catch (error) {
@@ -89,7 +89,7 @@ export async function createRoom(data: { name: string; floor: number }) {
 export async function deleteDevice(id: string) {
   try {
     await apiFetch(`/device/${id}`, { method: "DELETE" });
-    revalidateTag("devices");
+    revalidateTag("devices", "hours");
     revalidatePath("/admin/devices");
     revalidatePath("/devices");
   } catch (error) {
@@ -104,7 +104,7 @@ export async function createDevice(data: { name: string; type: string; serialNum
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("devices");
+    revalidateTag("devices", "hours");
     revalidatePath("/admin/devices");
     revalidatePath("/devices");
   } catch (error) {
