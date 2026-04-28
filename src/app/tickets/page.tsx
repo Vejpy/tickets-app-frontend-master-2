@@ -1,24 +1,56 @@
-import { getTickets, getPersons } from "@/utils/services";
+import { getTickets, getPersons, getRooms, getDevices } from "@/utils/services";
 import Search from "@/components/ui/Search";
 import { TicketStatus, TicketPriority } from "@/types/ticket.types";
 import TicketActions from "@/components/ui/TicketActions";
+import TicketFilters from "@/components/ui/TicketFilters";
 
 export default async function TicketsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: Promise<{ query?: string; priority?: string; personId?: string; roomId?: string; deviceType?: string }>;
 }) {
-  const query = (await searchParams).query;
-  const allTickets = await getTickets().catch(() => []);
-  const allPersons = await getPersons().catch(() => []);
+  const { query, priority, personId, roomId, deviceType } = await searchParams;
   
-  const filteredTickets = query 
-    ? allTickets.filter(t => t.title.toLowerCase().includes(query.toLowerCase()))
-    : allTickets;
+  const [allTickets, allPersons, allRooms, allDevices] = await Promise.all([
+    getTickets().catch(() => []),
+    getPersons().catch(() => []),
+    getRooms().catch(() => []),
+    getDevices().catch(() => []),
+  ]);
+  
+  // Filter devices based on roomId and deviceType if specified
+  let allowedDeviceIds: Set<string> | null = null;
+  if (roomId || deviceType) {
+    const matchingDevices = allDevices.filter(d => {
+      if (roomId && d.roomId !== roomId) return false;
+      if (deviceType && d.type !== deviceType) return false;
+      return true;
+    });
+    allowedDeviceIds = new Set(matchingDevices.map(d => d.id));
+  }
+
+  const filteredTickets = allTickets.filter(t => {
+    // 1. Title match
+    if (query && !t.title.toLowerCase().includes(query.toLowerCase())) return false;
+    
+    // 2. Priority match
+    if (priority && t.priority !== priority) return false;
+    
+    // 3. Person match
+    if (personId && t.assignedPersonId !== personId) return false;
+    
+    // 4. Device / Room match (if roomId or deviceType is filtered)
+    if (allowedDeviceIds !== null) {
+      if (!t.deviceId || !allowedDeviceIds.has(t.deviceId)) return false;
+    }
+    
+    return true;
+  });
 
   return (
     <>
       <TicketActions />
+      <TicketFilters persons={allPersons} rooms={allRooms} />
       <section className="w-full mb-lg">
         <Search placeholder="Search tickets (Press Enter)" />
       </section>
