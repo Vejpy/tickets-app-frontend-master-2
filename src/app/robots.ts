@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/admin/",
     },
-    sitemap: "https://your-domain.com/sitemap.xml",
+    sitemap: "https://tickets-app-frontend-master-2.vercel.app/sitemap.xml",
   };
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import { cacheLife, cacheTag } from "next/cache";
-import { apiFetch } from "./api";
+import { httpGet } from "@/utils/server/server.http";
 import { Person } from "@/types/person.types";
 import { Room } from "@/types/room.types";
 import { Device } from "@/types/device.types";
@@ -10,39 +10,59 @@ import { Ticket } from "@/types/ticket.types";
 export async function getPersons() {
   "use cache";
   cacheLife("hours");
-  cacheTag("persons");
-  return apiFetch<Person[]>("/person");
+  cacheTag("persons", "hours");
+  return httpGet<Person[]>("/person");
 }
 
 export async function getPersonByEmail(email: string) {
-  return apiFetch<Person>("/person/by-email", {
-    query: { email }
+  return httpGet<Person>("/person/by-email", {
+    params: { email }
   });
 }
 
 export async function getRooms() {
   "use cache";
   cacheLife("hours");
-  cacheTag("rooms");
-  return apiFetch<Room[]>("/room");
+  cacheTag("rooms", "hours");
+  return httpGet<Room[]>("/room");
 }
 
 export async function getDevices() {
   "use cache";
   cacheLife("hours");
-  cacheTag("devices");
-  return apiFetch<Device[]>("/device");
+  cacheTag("devices", "hours");
+  return httpGet<Device[]>("/device");
 }
 
 export async function getTickets() {
   "use cache";
   cacheLife("hours");
-  cacheTag("tickets");
-  return apiFetch<Ticket[]>("/ticket");
+  cacheTag("tickets", "hours");
+  return httpGet<Ticket[]>("/ticket");
 }
 
-// Funkce pro agregace na dashboardu
+export async function getPersonById(id: string) {
+  return httpGet<Person>(`/person/${id}`);
+}
+
+export async function getRoomById(id: string) {
+  return httpGet<Room>(`/room/${id}`);
+}
+
+export async function getDeviceById(id: string) {
+  return httpGet<Device>(`/device/${id}`);
+}
+
+export async function getTicketById(id: string) {
+  return httpGet<Ticket>(`/ticket/${id}`);
+}
+
+// Funkce pro agregace na dashboardu (SSG-like caching)
 export async function getDashboardStats() {
+  "use cache";
+  cacheLife("days"); // Dashboard stats cache longer for SSG feel
+  cacheTag("dashboard", "hours");
+
   const [persons, rooms, devices, tickets] = await Promise.all([
     getPersons(),
     getRooms(),
@@ -57,4 +77,3 @@ export async function getDashboardStats() {
     ticketsCount: tickets.length,
   };
 }
-

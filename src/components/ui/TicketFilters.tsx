@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { Person } from "@/types/person.types";
 import { Room } from "@/types/room.types";
 import { TicketPriority } from "@/types/ticket.types";
@@ -19,13 +19,26 @@ export default function TicketFilters({
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  function handleFilterChange(key: string, value: string) {
+  const [localFilters, setLocalFilters] = useState({
+    priority: searchParams.get("priority") || "",
+    personId: searchParams.get("personId") || "",
+    roomId: searchParams.get("roomId") || "",
+    deviceType: searchParams.get("deviceType") || "",
+  });
+
+  function handleLocalChange(key: string, value: string) {
+    setLocalFilters(prev => ({ ...prev, [key]: value }));
+  }
+
+  function handleApplyFilters() {
     const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
+    Object.entries(localFilters).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
     
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
@@ -33,6 +46,12 @@ export default function TicketFilters({
   }
 
   function handleClearFilters() {
+    setLocalFilters({
+      priority: "",
+      personId: "",
+      roomId: "",
+      deviceType: "",
+    });
     const params = new URLSearchParams(searchParams);
     params.delete("priority");
     params.delete("personId");
@@ -68,15 +87,15 @@ export default function TicketFilters({
         )}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {/* Priority Filter */}
         <div className="flex flex-col gap-1.5">
           <label className="font-label-caps text-[10px] text-on-surface-variant uppercase pl-2">Priority</label>
           <div className="relative">
             <select
               className="w-full appearance-none bg-surface-container-low text-on-surface font-button text-sm rounded-xl px-4 py-2.5 border-none focus:ring-2 focus:ring-primary/20 outline-none pr-8 cursor-pointer"
-              value={searchParams.get("priority") || ""}
-              onChange={(e) => handleFilterChange("priority", e.target.value)}
+              value={localFilters.priority}
+              onChange={(e) => handleLocalChange("priority", e.target.value)}
             >
               <option value="">All Priorities</option>
               {Object.values(TicketPriority).map(p => (
@@ -95,8 +114,8 @@ export default function TicketFilters({
           <div className="relative">
             <select
               className="w-full appearance-none bg-surface-container-low text-on-surface font-button text-sm rounded-xl px-4 py-2.5 border-none focus:ring-2 focus:ring-primary/20 outline-none pr-8 cursor-pointer"
-              value={searchParams.get("personId") || ""}
-              onChange={(e) => handleFilterChange("personId", e.target.value)}
+              value={localFilters.personId}
+              onChange={(e) => handleLocalChange("personId", e.target.value)}
             >
               <option value="">All People</option>
               {persons.map(p => (
@@ -115,8 +134,8 @@ export default function TicketFilters({
           <div className="relative">
             <select
               className="w-full appearance-none bg-surface-container-low text-on-surface font-button text-sm rounded-xl px-4 py-2.5 border-none focus:ring-2 focus:ring-primary/20 outline-none pr-8 cursor-pointer"
-              value={searchParams.get("roomId") || ""}
-              onChange={(e) => handleFilterChange("roomId", e.target.value)}
+              value={localFilters.roomId}
+              onChange={(e) => handleLocalChange("roomId", e.target.value)}
             >
               <option value="">All Rooms</option>
               {rooms.map(r => (
@@ -135,8 +154,8 @@ export default function TicketFilters({
           <div className="relative">
             <select
               className="w-full appearance-none bg-surface-container-low text-on-surface font-button text-sm rounded-xl px-4 py-2.5 border-none focus:ring-2 focus:ring-primary/20 outline-none pr-8 cursor-pointer"
-              value={searchParams.get("deviceType") || ""}
-              onChange={(e) => handleFilterChange("deviceType", e.target.value)}
+              value={localFilters.deviceType}
+              onChange={(e) => handleLocalChange("deviceType", e.target.value)}
             >
               <option value="">All Devices</option>
               {Object.values(DeviceType).map(t => (
@@ -147,6 +166,16 @@ export default function TicketFilters({
               <span className="material-symbols-outlined text-[16px]">expand_more</span>
             </div>
           </div>
+        </div>
+
+        {/* Apply Button */}
+        <div className="flex flex-col justify-end">
+          <button
+            onClick={handleApplyFilters}
+            className="w-full bg-primary text-on-primary font-button text-sm py-2.5 rounded-xl shadow-sm hover:opacity-90 transition-all active:scale-[0.98]"
+          >
+            Filter
+          </button>
         </div>
       </div>
     </div>

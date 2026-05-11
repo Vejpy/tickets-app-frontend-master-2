@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://your-domain.com"; // Default for project
+  const baseUrl = "https://tickets-app-frontend-master-2.vercel.app/";
 
   return [
     {

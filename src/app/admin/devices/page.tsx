@@ -48,6 +48,12 @@ export default async function AdminDevicesPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
+                    <Link 
+                      href={`/admin/devices/edit/${device.id}`}
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-primary border border-primary/10 hover:bg-primary-container/30 transition-all active:scale-[0.95]"
+                    >
+                      <span className="material-symbols-outlined">edit</span>
+                    </Link>
                     <form action={async () => {
                       "use server";
                       await deleteDevice(device.id);

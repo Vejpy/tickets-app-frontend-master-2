@@ -2,36 +2,23 @@
 
 import { Person } from "@/types/person.types";
 import { ActionResult } from "../../../../types/person-actions.types";
-import { AxiosResponse } from "axios";
 import { httpPost, httpPatch } from "../../server.http";
 import { ApiError } from "@/types/error.types";
-import { updateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function createPerson(
   data: Person,
 ): Promise<ActionResult<Person>> {
   try {
-    const response = await httpPost<Person, AxiosResponse<Person>>(
-      "/person",
-      data,
-    );
+    const responseData = await httpPost<Person, Person>("/person", data);
 
-    // POST vrací vždy 201 ideálně (viz Swagger)
-    if (response.status === 201) {
-      updateTag("persons");
+    revalidateTag("persons", "hours");
 
-      return {
-        ok: true,
-        message: "Person created successfully",
-        data: response.data,
-      };
-    } else {
-      return {
-        ok: false,
-        message: `Unexpected status code: ${response.status}`,
-        statusCode: response.status,
-      };
-    }
+    return {
+      ok: true,
+      message: "Person created successfully",
+      data: responseData,
+    };
   } catch (err) {
     if (err instanceof ApiError) {
       return {
@@ -54,27 +41,18 @@ export async function createPerson(
 
 export async function editPerson(data: Person): Promise<ActionResult<Person>> {
   try {
-    const response = await httpPatch<Person, AxiosResponse<Person>>( // TODO: Implement httpPatch
+    const responseData = await httpPatch<Person, Person>(
       `/person/${data.id}`,
       data,
     );
 
-    if (response.status === 200) {
-      updateTag("persons");
-      updateTag(`persons/${data.id}`);
+    revalidateTag("persons", "hours");
 
-      return {
-        ok: true,
-        message: "Person updated successfully",
-        data: response.data,
-      };
-    } else {
-      return {
-        ok: false,
-        message: `Unexpected status code: ${response.status}`,
-        statusCode: response.status,
-      };
-    }
+    return {
+      ok: true,
+      message: "Person updated successfully",
+      data: responseData,
+    };
   } catch (err) {
     if (err instanceof ApiError) {
       return {

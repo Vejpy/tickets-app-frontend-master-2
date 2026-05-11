@@ -37,6 +37,12 @@ export default async function AdminPersonsPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-sm">
+                    <Link 
+                      href={`/admin/persons/edit/${person.id}`}
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-primary border border-primary/10 hover:bg-primary-container/30 transition-all active:scale-[0.95]"
+                    >
+                      <span className="material-symbols-outlined">edit</span>
+                    </Link>
                     {/* Delete Action - Using a small form for server action */}
                     <form action={async () => {
                       "use server";

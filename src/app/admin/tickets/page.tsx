@@ -36,7 +36,13 @@ export default async function AdminTicketsPage() {
                   <div className="flex justify-between items-start mb-sm">
                     <span className="font-label-caps text-label-caps text-outline uppercase text-[10px]">#HD-{ticket.id.slice(-4)}</span>
                     <div className="flex items-center gap-2">
-                       <form action={async () => {
+                       <Link 
+                        href={`/admin/tickets/edit/${ticket.id}`}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-primary border border-primary/10 hover:bg-primary-container/30 transition-all active:scale-[0.8]"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">edit</span>
+                      </Link>
+                      <form action={async () => {
                         "use server";
                         await deleteTicket(ticket.id);
                       }}>

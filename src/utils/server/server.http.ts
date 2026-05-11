@@ -7,7 +7,8 @@ export async function httpGet<TResponse>(
   url: string,
   options: AxiosRequestConfig = {},
 ) {
-  return await axiosInstance.get<TResponse>(url, options);
+  const res = await axiosInstance.get<TResponse>(url, options);
+  return res.data;
 }
 
 export async function httpPost<TRequest, TResponse = unknown>(
@@ -15,7 +16,8 @@ export async function httpPost<TRequest, TResponse = unknown>(
   data: TRequest,
   options: AxiosRequestConfig = {},
 ) {
-  return await axiosInstance.post<TRequest, TResponse>(url, data, options);
+  const res = await axiosInstance.post<TResponse>(url, data, options);
+  return res.data;
 }
 
 export async function httpPatch<TRequest, TResponse = unknown>(
@@ -23,7 +25,8 @@ export async function httpPatch<TRequest, TResponse = unknown>(
   data: TRequest,
   options: AxiosRequestConfig = {},
 ) {
-  return await axiosInstance.patch<TRequest, TResponse>(url, data, options);
+  const res = await axiosInstance.patch<TResponse>(url, data, options);
+  return res.data;
 }
 
 export async function httpPut<TRequest, TResponse = unknown>(
@@ -31,12 +34,14 @@ export async function httpPut<TRequest, TResponse = unknown>(
   data: TRequest,
   options: AxiosRequestConfig = {},
 ) {
-  return await axiosInstance.put<TRequest, TResponse>(url, data, options);
+  const res = await axiosInstance.put<TResponse>(url, data, options);
+  return res.data;
 }
 
 export async function httpDelete<TResponse = unknown>(
   url: string,
   options: AxiosRequestConfig = {},
 ) {
-  return await axiosInstance.delete<TResponse>(url, options);
+  const res = await axiosInstance.delete<TResponse>(url, options);
+  return res.data;
 }

@@ -58,6 +58,17 @@ export default async function HomePage() {
             <p className="text-[13px] font-bold text-slate-400 uppercase tracking-widest mt-2">Rooms</p>
           </div>
         </div>
+
+        {/* Metric Card 4 (Persons) */}
+        <div className="bg-white rounded-[2rem] p-6 flex flex-col justify-between shadow-ambient aspect-[1.1] active:scale-[0.98] transition-transform duration-200 border border-slate-100">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>person</span>
+          </div>
+          <div className="mt-4">
+            <p className="text-[44px] font-extrabold text-slate-900 leading-none">{stats.personsCount}</p>
+            <p className="text-[13px] font-bold text-slate-400 uppercase tracking-widest mt-2">Persons</p>
+          </div>
+        </div>
       </section>
 
       {/* Quick Access */}

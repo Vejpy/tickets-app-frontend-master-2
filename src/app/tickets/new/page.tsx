@@ -22,7 +22,7 @@ export default function PublicTicketAddPage() {
     status: TicketStatus.OPEN,
     deviceId: "",
     roomId: "",
-    assignedPersonId: "", // Will be unset initially
+    assignedPersonId: "",
   });
 
   useEffect(() => {
@@ -44,18 +44,18 @@ export default function PublicTicketAddPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!formData.deviceId && !formData.roomId) return alert("Please select a device or a room");
-    
+
     setLoading(true);
     try {
       const payload: any = { ...formData, assignedPersonId: loggedInUser?.id || "" };
-      
+
       // The API strictly forbids 'roomId'. Append it to description and delete it.
       if (payload.roomId) {
         const selectedRoom = rooms.find(r => r.id === payload.roomId);
         if (selectedRoom) payload.description += `\n\n[Location: ${selectedRoom.name}]`;
       }
       delete payload.roomId;
-      
+
       // Clean up empty optional fields to prevent UUID parse errors
       if (!payload.deviceId) delete payload.deviceId;
       if (!payload.assignedPersonId) delete payload.assignedPersonId;
@@ -81,7 +81,7 @@ export default function PublicTicketAddPage() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-lg">
         <div className="bg-white rounded-[2.5rem] p-8 shadow-ambient border border-surface-variant/20 flex flex-col gap-lg">
-          
+
           <div className="flex flex-col gap-2">
             <label className="font-label-caps text-[11px] text-on-surface-variant uppercase tracking-widest pl-2">What's wrong?</label>
             <input
@@ -154,11 +154,10 @@ export default function PublicTicketAddPage() {
                   key={p}
                   type="button"
                   onClick={() => setFormData({ ...formData, priority: p })}
-                  className={`flex-1 py-3 rounded-xl font-bold text-[12px] uppercase tracking-widest transition-all ${
-                    formData.priority === p 
-                    ? "bg-slate-900 text-white shadow-md scale-[1.02]" 
-                    : "bg-slate-50 text-slate-400 hover:bg-slate-100"
-                  }`}
+                  className={`flex-1 py-3 rounded-xl font-bold text-[12px] uppercase tracking-widest transition-all ${formData.priority === p
+                      ? "bg-slate-900 text-white shadow-md scale-[1.02]"
+                      : "bg-slate-50 text-slate-400 hover:bg-slate-100"
+                    }`}
                 >
                   {p}
                 </button>

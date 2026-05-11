@@ -1,16 +1,14 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
-import { apiFetch } from "@/utils/api";
+import { revalidateTag } from "next/cache";
+import { httpDelete, httpPatch, httpPost } from "@/utils/server/server.http";
 import { Person } from "@/types/person.types";
-import { Ticket } from "@/types/ticket.types";
 
 export async function deletePerson(id: string) {
   try {
-    await apiFetch(`/person/${id}`, { method: "DELETE" });
+    await httpDelete(`/person/${id}`);
     revalidateTag("persons", "hours");
-    revalidatePath("/admin/persons");
-    revalidatePath("/persons");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to delete person:", error);
     throw error;
@@ -19,13 +17,9 @@ export async function deletePerson(id: string) {
 
 export async function createPerson(data: Omit<Person, "id">) {
   try {
-    await apiFetch("/person", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    await httpPost("/person", data);
     revalidateTag("persons", "hours");
-    revalidatePath("/admin/persons");
-    revalidatePath("/persons");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to create person:", error);
     throw error;
@@ -34,10 +28,9 @@ export async function createPerson(data: Omit<Person, "id">) {
 
 export async function deleteTicket(id: string) {
   try {
-    await apiFetch(`/ticket/${id}`, { method: "DELETE" });
+    await httpDelete(`/ticket/${id}`);
     revalidateTag("tickets", "hours");
-    revalidatePath("/admin/tickets");
-    revalidatePath("/tickets");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to delete ticket:", error);
     throw error;
@@ -46,13 +39,9 @@ export async function deleteTicket(id: string) {
 
 export async function createTicket(data: any) {
   try {
-    await apiFetch("/ticket", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    await httpPost("/ticket", data);
     revalidateTag("tickets", "hours");
-    revalidatePath("/admin/tickets");
-    revalidatePath("/tickets");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to create ticket:", error);
     throw error;
@@ -61,10 +50,9 @@ export async function createTicket(data: any) {
 
 export async function deleteRoom(id: string) {
   try {
-    await apiFetch(`/room/${id}`, { method: "DELETE" });
+    await httpDelete(`/room/${id}`);
     revalidateTag("rooms", "hours");
-    revalidatePath("/admin/rooms");
-    revalidatePath("/rooms");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to delete room:", error);
     throw error;
@@ -73,13 +61,9 @@ export async function deleteRoom(id: string) {
 
 export async function createRoom(data: { name: string; floor: number }) {
   try {
-    await apiFetch("/room", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    await httpPost("/room", data);
     revalidateTag("rooms", "hours");
-    revalidatePath("/admin/rooms");
-    revalidatePath("/rooms");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to create room:", error);
     throw error;
@@ -88,10 +72,9 @@ export async function createRoom(data: { name: string; floor: number }) {
 
 export async function deleteDevice(id: string) {
   try {
-    await apiFetch(`/device/${id}`, { method: "DELETE" });
+    await httpDelete(`/device/${id}`);
     revalidateTag("devices", "hours");
-    revalidatePath("/admin/devices");
-    revalidatePath("/devices");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to delete device:", error);
     throw error;
@@ -100,15 +83,55 @@ export async function deleteDevice(id: string) {
 
 export async function createDevice(data: { name: string; type: string; serialNumber: string; roomId: string }) {
   try {
-    await apiFetch("/device", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    await httpPost("/device", data);
     revalidateTag("devices", "hours");
-    revalidatePath("/admin/devices");
-    revalidatePath("/devices");
+    revalidateTag("dashboard", "hours");
   } catch (error) {
     console.error("Failed to create device:", error);
+    throw error;
+  }
+}
+
+export async function updatePerson(id: string, data: Partial<Person>) {
+  try {
+    await httpPatch(`/person/${id}`, data);
+    revalidateTag("persons", "hours");
+    revalidateTag("dashboard", "hours");
+  } catch (error) {
+    console.error("Failed to update person:", error);
+    throw error;
+  }
+}
+
+export async function updateTicket(id: string, data: any) {
+  try {
+    await httpPatch(`/ticket/${id}`, data);
+    revalidateTag("tickets", "hours");
+    revalidateTag("dashboard", "hours");
+  } catch (error) {
+    console.error("Failed to update ticket:", error);
+    throw error;
+  }
+}
+
+export async function updateRoom(id: string, data: { name: string; floor: number }) {
+  try {
+    await httpPatch(`/room/${id}`, data);
+    revalidateTag("rooms", "hours");
+    revalidateTag("dashboard", "hours");
+  } catch (error) {
+    console.error("Failed to update room:", error);
+    throw error;
+  }
+}
+
+export async function updateDevice(id: string, data: { name: string; type: string; serialNumber: string; roomId: string }) {
+  try {
+    await httpPatch(`/device/${id}`, data);
+    revalidateTag("devices", "hours");
+    revalidateTag("dashboard", "hours");
+  } catch (error) {
+    console.error("Failed to update device:", error);
     throw error;
   }
 }
