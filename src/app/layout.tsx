@@ -60,7 +60,9 @@ export default function RootLayout({
           </Suspense>
         </main>
 
-        <Navbar />
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
       </body>
     </html>
   );
